@@ -135,11 +135,11 @@ public class MultimediaPlayer {
                     System.out.println("Torno indietro");
                     return;
                 }
-                case 1 -> riproduzione.get(0).play();
-                case 2 -> riproduzione.get(1).play();
-                case 3 -> riproduzione.get(2).play();
-                case 4 -> riproduzione.get(3).play();
-                case 5 -> riproduzione.get(4).play();
+                case 1 -> MultimediaPlayer.riproduci(riproduzione.get(0));
+                case 2 -> MultimediaPlayer.riproduci(riproduzione.get(1));
+                case 3 -> MultimediaPlayer.riproduci(riproduzione.get(2));
+                case 4 -> MultimediaPlayer.riproduci(riproduzione.get(3));
+                case 5 -> MultimediaPlayer.riproduci(riproduzione.get(4));
 
             }
         }
