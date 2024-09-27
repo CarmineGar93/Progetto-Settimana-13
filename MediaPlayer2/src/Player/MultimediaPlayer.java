@@ -11,11 +11,14 @@ import java.util.Scanner;
 public class MultimediaPlayer {
     public static ArrayList<ElementoMultimediale> riproduzione = new ArrayList<>();
     public static ElementoMultimediale ultimoinRiproduzione;
+
     public static void riproduci(ElementoMultimediale el){
+        System.out.println("Elemento " + el.getTitolo() +" in riproduzione");
         el.play();
         MultimediaPlayer.ultimoinRiproduzione = el;
+        System.out.println("Riproduzione terminata");
     }
-    private static void gesticiVolLum(){
+    private static void gesticiVolLum(ElementoMultimediale el){
         Scanner sc = new Scanner(System.in);
         System.out.println("Prego scegli cosa modificare");
         System.out.println("1 per Volume - 2 per Luminosita - 0 per tornare indietro");
@@ -25,7 +28,7 @@ public class MultimediaPlayer {
                 System.out.println("Torno indietro");
             }
             case 1 -> {
-                if(ultimoinRiproduzione instanceof Immagine) {
+                if(el instanceof Immagine) {
                     System.out.println("Mi dispiace non è possibile regolare il volume. File non supportato");
                 } else {
                     System.out.println("1 per alzare volume, 2 per abbassare");
@@ -33,23 +36,23 @@ public class MultimediaPlayer {
                     if(Integer.parseInt(s) == 1){
                         System.out.println("Di quanto vuoi alzare il volume?");
                         String vol = sc.nextLine();
-                        if(ultimoinRiproduzione instanceof Video){
-                            ((Video) ultimoinRiproduzione).alzaVolume(Integer.parseInt(vol));
+                        if(el instanceof Video){
+                            ((Video) el).alzaVolume(Integer.parseInt(vol));
                         } else {
-                            ((RegistrazioneAudio) ultimoinRiproduzione).alzaVolume(Integer.parseInt(vol));
+                            ((RegistrazioneAudio) el).alzaVolume(Integer.parseInt(vol));
                         }
                     } else {
                         String vol = sc.nextLine();
-                        if(ultimoinRiproduzione instanceof Video){
-                            ((Video) ultimoinRiproduzione).abbassaVolume(Integer.parseInt(vol));
+                        if(el instanceof Video){
+                            ((Video) el).abbassaVolume(Integer.parseInt(vol));
                         } else {
-                            ((RegistrazioneAudio) ultimoinRiproduzione).abbassaVolume(Integer.parseInt(vol));
+                            ((RegistrazioneAudio) el).abbassaVolume(Integer.parseInt(vol));
                         }
                     }
                 }
             }
             case 2 -> {
-                if(ultimoinRiproduzione instanceof RegistrazioneAudio) {
+                if(el instanceof RegistrazioneAudio) {
                     System.out.println("Mi dispiace non è possibile regolare il volume. File non supportato");
                 } else {
                     System.out.println("1 per alzare luminosita, 2 per abbassare");
@@ -57,18 +60,18 @@ public class MultimediaPlayer {
                     if(Integer.parseInt(s) == 1){
                         System.out.println("Di quanto vuoi alzare la luminosita?");
                         String lum = sc.nextLine();
-                        if(ultimoinRiproduzione instanceof Video){
-                            ((Video) ultimoinRiproduzione).alzaLuminosita(Integer.parseInt(lum));
+                        if(el instanceof Video){
+                            ((Video) el).alzaLuminosita(Integer.parseInt(lum));
                         } else {
-                            ((Immagine) ultimoinRiproduzione).alzaLuminosita(Integer.parseInt(lum));
+                            ((Immagine) el).alzaLuminosita(Integer.parseInt(lum));
                         }
                     } else {
                         System.out.println("Di quanto vuoi abbassare la luminosita?");
                         String lum = sc.nextLine();
-                        if(ultimoinRiproduzione instanceof Video){
-                            ((Video) ultimoinRiproduzione).abbassaLuminosita(Integer.parseInt(lum));
+                        if(el instanceof Video){
+                            ((Video) el).abbassaLuminosita(Integer.parseInt(lum));
                         } else {
-                            ((Immagine) ultimoinRiproduzione).abbassaLuminosita(Integer.parseInt(lum));
+                            ((Immagine) el).abbassaLuminosita(Integer.parseInt(lum));
                         }
 
                     }
@@ -112,10 +115,23 @@ public class MultimediaPlayer {
     private static void riproduzioneRapida(){
         riproduzione.clear();
         insert();
-        System.out.println("Elemento in riproduzione");
-        riproduzione.getFirst().play();
-        ultimoinRiproduzione = riproduzione.getFirst();
-        System.out.println("Riproduzione terminata");
+        MultimediaPlayer.riproduci(riproduzione.getFirst());
+    }
+
+    private static void gestisciSingolo(ElementoMultimediale el){
+        while(true){
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Cosa vuoi fare con l'elemento " + el.getTitolo() + " ?");
+            System.out.println("1 - Gestisci volume");
+            System.out.println("2 - Riprodruci brano");
+            System.out.println("0 - Torna indietro");
+            String s = sc.nextLine();
+            if(Integer.parseInt(s) == 0) break;
+            if(Integer.parseInt(s) == 1) MultimediaPlayer.gesticiVolLum(el);
+            else MultimediaPlayer.riproduci(el);
+
+        }
+
     }
 
     private static void riproduzioneCoda(){
@@ -127,20 +143,10 @@ public class MultimediaPlayer {
         }
         System.out.println("Bene tutto settato");
         while (true){
-            System.out.println("Adesso scegli quale elemento riprodurre da 1 a 5, 0 per tornare indietro");
+            System.out.println("Adesso scegli quale elemento vuoi visualizzare da 1 a 5, 0 per tornare indietro");
             String scelta = sc.nextLine();
-            switch (Integer.parseInt(scelta)){
-                case 0 -> {
-                    System.out.println("Torno indietro");
-                    return;
-                }
-                case 1 -> MultimediaPlayer.riproduci(riproduzione.get(0));
-                case 2 -> MultimediaPlayer.riproduci(riproduzione.get(1));
-                case 3 -> MultimediaPlayer.riproduci(riproduzione.get(2));
-                case 4 -> MultimediaPlayer.riproduci(riproduzione.get(3));
-                case 5 -> MultimediaPlayer.riproduci(riproduzione.get(4));
-
-            }
+            if(Integer.parseInt(scelta) == 0) break;
+            else MultimediaPlayer.gestisciSingolo(riproduzione.get(Integer.parseInt(scelta) - 1));
         }
 
     }
@@ -149,9 +155,7 @@ public class MultimediaPlayer {
         if(ultimoinRiproduzione == null){
             System.out.println("Nessun elemento in coda");
         } else {
-            System.out.println("Ultimo elemento in riproduzione");
-            ultimoinRiproduzione.play();
-            System.out.println("Riproduzione terminata");
+            MultimediaPlayer.riproduci(ultimoinRiproduzione);
         }
 
     }
@@ -170,7 +174,7 @@ public class MultimediaPlayer {
             switch (Integer.parseInt(scelta)){
                 case 1 -> MultimediaPlayer.riproduzioneRapida();
                 case 2 -> MultimediaPlayer.riproduciUltimo();
-                case 3 -> MultimediaPlayer.gesticiVolLum();
+                case 3 -> MultimediaPlayer.gesticiVolLum(ultimoinRiproduzione);
                 case 4 -> MultimediaPlayer.riproduzioneCoda();
                 default -> {
                     System.out.println("A presto");
