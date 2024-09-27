@@ -100,12 +100,10 @@ public class MultimediaPlayer {
                     System.out.println("Di quanto vuoi alzare il volume?");
                     String vol = sc.nextLine();
                     MultimediaPlayer.alzaVolume(Integer.parseInt(vol));
-                    MultimediaPlayer.avvia();
                 } else {
                     System.out.println("Di quanto vuoi abbassare il volume?");
                     String vol = sc.nextLine();
                     MultimediaPlayer.abbassaVolume(Integer.parseInt(vol));
-                    MultimediaPlayer.avvia();
                 }
             }
             case 2 -> {
@@ -115,7 +113,6 @@ public class MultimediaPlayer {
                     System.out.println("Di quanto vuoi alzare la luminosita?");
                     String lum = sc.nextLine();
                     MultimediaPlayer.alzaLuminosita(Integer.parseInt(lum));
-                    MultimediaPlayer.avvia();
                 } else {
                     System.out.println("Di quanto vuoi abbassare la luminosita?");
                     String volume = sc.nextLine();
@@ -126,43 +123,54 @@ public class MultimediaPlayer {
         }
 
     }
-    private static void riproduzioneRapida(){
 
+    private static void insert(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Che cosa vuoi inserire");
+        System.out.println("1 per Audio - 2 per Video - 3 per Immagine");
+        String s = sc.nextLine();
+        switch (Integer.parseInt(s)){
+            case 1 -> {
+                System.out.println("Prego inserire titolo audio");
+                String titolo = sc.nextLine();
+                System.out.println("Prego inserire durata audio");
+                String dur = sc.nextLine();
+                RegistrazioneAudio audio = new RegistrazioneAudio(titolo, Integer.parseInt(dur));
+                riproduzione.add(audio);
+            }
+            case 2 -> {
+                System.out.println("Prego inserire titolo video");
+                String titolo = sc.next();
+                System.out.println("Prego inserire durata video");
+                String dur = sc.next();
+                sc.nextLine();
+                Video video = new Video(titolo, Integer.parseInt(dur));
+                riproduzione.add(video);
+            }
+            case 3 -> {
+                System.out.println("Prego inserire titolo immagine");
+                String titolo = sc.next();
+                sc.nextLine();
+                Immagine immagine = new Immagine(titolo);
+                riproduzione.add(immagine);
+            }
+        }
+    }
+
+    private static void riproduzioneRapida(){
+        riproduzione.clear();
+        insert();
+        System.out.println("Elemento in riproduzione");
+        MultimediaPlayer.riproduci(riproduzione.getFirst());
+        System.out.println("Riproduzione terminata");
     }
 
     private static void riproduzioneCoda(){
+        riproduzione.clear();
         Scanner sc = new Scanner(System.in);
         System.out.println("Per favore inserisci 5 elementi multimediali");
         for(int i = 0; i < 5; i++){
-            System.out.println("Che cosa vuoi inserire");
-            System.out.println("1 per Audio - 2 per Video - 3 per Immagine");
-            String s = sc.nextLine();
-            switch (Integer.parseInt(s)){
-                case 1 -> {
-                    System.out.println("Prego inserire titolo audio");
-                    String titolo = sc.nextLine();
-                    System.out.println("Prego inserire durata audio");
-                    String dur = sc.nextLine();
-                    RegistrazioneAudio audio = new RegistrazioneAudio(titolo, Integer.parseInt(dur));
-                    riproduzione.add(audio);
-                }
-                case 2 -> {
-                    System.out.println("Prego inserire titolo video");
-                    String titolo = sc.next();
-                    System.out.println("Prego inserire durata video");
-                    String dur = sc.next();
-                    sc.nextLine();
-                    Video video = new Video(titolo, Integer.parseInt(dur));
-                    riproduzione.add(video);
-                }
-                case 3 -> {
-                    System.out.println("Prego inserire titolo immagine");
-                    String titolo = sc.next();
-                    sc.nextLine();
-                    Immagine immagine = new Immagine(titolo);
-                    riproduzione.add(immagine);
-                }
-            }
+            insert();
         }
         System.out.println("Bene tutto settato");
         while (true){
@@ -170,7 +178,7 @@ public class MultimediaPlayer {
             String scelta = sc.nextLine();
             switch (Integer.parseInt(scelta)){
                 case 0 -> {
-                    return;
+                    System.out.println("Torno indietro");
                 }
                 case 1 -> MultimediaPlayer.riproduci(riproduzione.get(0));
                 case 2 -> MultimediaPlayer.riproduci(riproduzione.get(1));
@@ -191,13 +199,13 @@ public class MultimediaPlayer {
             System.out.println("3 - Riproduzione a scelta di 5 elementi in coda");
             System.out.println("4 - Spegni Player");
             String scelta = sc.nextLine();
+            if(Integer.parseInt(scelta) == 4) return;
             switch (Integer.parseInt(scelta)){
                 case 1 -> MultimediaPlayer.riproduzioneRapida();
                 case 2 -> MultimediaPlayer.gesticiVolLum();
                 case 3 -> MultimediaPlayer.riproduzioneCoda();
                 default -> {
                     System.out.println("A presto");
-                    return;
                 }
             }
         }
