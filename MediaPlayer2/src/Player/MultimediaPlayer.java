@@ -147,14 +147,20 @@ public class MultimediaPlayer {
     }
 
     public static void riproduciUltimo(){
-        System.out.println("Ultimo elemento in riproduzione");
-        ultimoinRiproduzione.play();
-        System.out.println("Riproduzione terminata");
+        if(ultimoinRiproduzione == null){
+            System.out.println("Nessun elemento in coda");
+        } else {
+            System.out.println("Ultimo elemento in riproduzione");
+            ultimoinRiproduzione.play();
+            System.out.println("Riproduzione terminata");
+        }
+
     }
 
     public static void avvia(){
         Scanner sc = new Scanner(System.in);
         while (true){
+            System.out.println("Volume e luminosita di default sono impostati al 50 per cento");
             System.out.println("Che cosa vuoi fare?");
             System.out.println("1 - Riproduzione rapida elemento multimediale");
             System.out.println("2 - Riproduzione rapida ultimo elemento visualizzato");
