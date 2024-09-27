@@ -133,6 +133,7 @@ public class MultimediaPlayer {
             switch (Integer.parseInt(scelta)){
                 case 0 -> {
                     System.out.println("Torno indietro");
+                    return;
                 }
                 case 1 -> riproduzione.get(0).play();
                 case 2 -> riproduzione.get(1).play();
