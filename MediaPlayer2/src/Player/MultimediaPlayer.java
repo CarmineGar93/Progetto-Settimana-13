@@ -127,8 +127,8 @@ public class MultimediaPlayer {
         while(true){
             Scanner sc = new Scanner(System.in);
             System.out.println("Cosa vuoi fare con l'elemento " + el.getTitolo() + " ?");
-            System.out.println("1 - Gestisci volume");
-            System.out.println("2 - Riprodruci brano");
+            System.out.println("1 - Gestisci volume/ luminosità");
+            System.out.println("2 - Riprodruci");
             System.out.println("0 - Torna indietro");
             String s = sc.nextLine();
             if(Integer.parseInt(s) == 0) break;
