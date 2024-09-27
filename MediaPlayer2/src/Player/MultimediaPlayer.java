@@ -168,10 +168,6 @@ public class MultimediaPlayer {
             System.out.println("4 - Riproduzione a scelta di 5 elementi in coda");
             System.out.println("5 - Spegni Player");
             String scelta = sc.nextLine();
-            if(Integer.parseInt(scelta) == 5) {
-                System.out.println("A presto");
-                return;
-            }
             switch (Integer.parseInt(scelta)){
                 case 1 -> MultimediaPlayer.riproduzioneRapida();
                 case 2 -> MultimediaPlayer.riproduciUltimo();
@@ -179,6 +175,7 @@ public class MultimediaPlayer {
                 case 4 -> MultimediaPlayer.riproduzioneCoda();
                 default -> {
                     System.out.println("A presto");
+                    return;
                 }
             }
         }
