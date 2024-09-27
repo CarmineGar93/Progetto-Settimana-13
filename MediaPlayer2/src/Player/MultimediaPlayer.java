@@ -41,19 +41,22 @@ public class MultimediaPlayer {
                         } else {
                             ((RegistrazioneAudio) el).alzaVolume(Integer.parseInt(vol));
                         }
-                    } else {
+                    } else if(Integer.parseInt(s) == 2) {
+                        System.out.println("Di quanto vuoi abbassare il volume?");
                         String vol = sc.nextLine();
                         if(el instanceof Video){
                             ((Video) el).abbassaVolume(Integer.parseInt(vol));
                         } else {
                             ((RegistrazioneAudio) el).abbassaVolume(Integer.parseInt(vol));
                         }
+                    } else {
+                        System.out.println("Torno indietro");
                     }
                 }
             }
             case 2 -> {
                 if(el instanceof RegistrazioneAudio) {
-                    System.out.println("Mi dispiace non è possibile regolare il volume. File non supportato");
+                    System.out.println("Mi dispiace non è possibile regolare la luminosità. File non supportato");
                 } else {
                     System.out.println("1 per alzare luminosita, 2 per abbassare");
                     String s = sc.nextLine();
@@ -65,7 +68,7 @@ public class MultimediaPlayer {
                         } else {
                             ((Immagine) el).alzaLuminosita(Integer.parseInt(lum));
                         }
-                    } else {
+                    } else if(Integer.parseInt(s) == 2) {
                         System.out.println("Di quanto vuoi abbassare la luminosita?");
                         String lum = sc.nextLine();
                         if(el instanceof Video){
@@ -74,6 +77,8 @@ public class MultimediaPlayer {
                             ((Immagine) el).abbassaLuminosita(Integer.parseInt(lum));
                         }
 
+                    } else {
+                        System.out.println("Torno indietro");
                     }
                 }
             }
@@ -163,7 +168,7 @@ public class MultimediaPlayer {
     public static void avvia(){
         Scanner sc = new Scanner(System.in);
         while (true){
-            System.out.println("Volume e luminosita di default sono impostati al 50 per cento");
+            System.out.println("Volume e luminosita di default sono impostati al 50 %");
             System.out.println("Che cosa vuoi fare?");
             System.out.println("1 - Riproduzione rapida elemento multimediale");
             System.out.println("2 - Riproduzione rapida ultimo elemento visualizzato");
