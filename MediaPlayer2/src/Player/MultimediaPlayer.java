@@ -24,9 +24,7 @@ public class MultimediaPlayer {
         System.out.println("1 per Volume - 2 per Luminosita - 0 per tornare indietro");
         String scelta = sc.nextLine();
         switch (Integer.parseInt(scelta)){
-            case 0 -> {
-                System.out.println("Torno indietro");
-            }
+            case 0 -> System.out.println("Torno indietro");
             case 1 -> {
                 if(el instanceof Immagine) {
                     System.out.println("Mi dispiace non è possibile regolare il volume. File non supportato");
@@ -127,8 +125,8 @@ public class MultimediaPlayer {
         while(true){
             Scanner sc = new Scanner(System.in);
             System.out.println("Cosa vuoi fare con l'elemento " + el.getTitolo() + " ?");
-            System.out.println("1 - Gestisci volume/ luminosità");
-            System.out.println("2 - Riprodruci");
+            System.out.println("1 - Gestisci volume/luminosità");
+            System.out.println("2 - Riproduci");
             System.out.println("0 - Torna indietro");
             String s = sc.nextLine();
             if(Integer.parseInt(s) == 0) break;
